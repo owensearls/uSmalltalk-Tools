@@ -1,0 +1,71 @@
+%YAML 1.2
+---
+# http://www.sublimetext.com/docs/3/syntax.html
+#
+# `Micro Smalltalk` Language Reference:
+#  Programming Languages: Build, Prove, and Compare by Norman Ramsey
+#
+
+name: uSmalltalk
+file_extensions:
+  - smt
+scope: source.smt
+contexts:
+  main:
+    - include: comments
+    - include: parens
+    - include: class
+    - include: method
+    - include: control
+    - include: operators
+    - include: constants
+    - include: numbers
+
+  comments:
+    - match: (;).*$\n?
+      scope: comment.line.semicolon.smt
+      captures:
+        1: punctuation.definition.comment.smt
+
+  parens:
+    - match: (\(|\))
+      scope: punctuation.definition.group.smt
+
+  class:
+    - match: '\b(class)\b \b(\w*)\b \b(\w*)\b'
+      captures:
+        1: entity.name.class.smt
+        2: entity.name.smt
+        3: variable.language.smt
+
+  method:
+    - match: '\b(method|class-method)\b \b(\w*)\b'
+      captures:
+        1: entity.name.function.smt
+        2: entity.name.smt
+
+  control:
+    - match: \b(while|set)\b
+      scope: keyword.control.smt
+
+  operators:
+    - match: '\/\=|\>\=|\<\=|\=|\>|\<|\b(?i:max|min|eq|neq|eql|equalp|equal)\b'
+      scope: keyword.operator.comparison.smt
+    - match: '\+|\-|\*|\/|\b(?i:mod|rem|incf|decf)\b'
+      scope: keyword.operator.arithmetic.smt
+    - match: \b(?i:and|or|not)\b
+      scope: keyword.operator.logical.smt
+    - match: \b(?i:logand|logior|logxor|lognor|logeqv)\b
+      scope: keyword.operator.bitwise.smt
+
+  constants:
+    - match: \b()\b
+      scope: constant.language.smt
+    - match: '(#)(\w|[\\+-=<>''"&#])+'
+      scope: constant.character.smt
+      captures:
+        1: punctuation.definition.constant.smt
+
+  numbers:
+    - match: '\b[0-9]+\b'
+      scope: constant.numeric.smt
